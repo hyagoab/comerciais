@@ -1,12 +1,15 @@
 name: Publicar agenda
 
 on:
+  push:
+    branches: [main]
+    paths: ["agenda/**"]
   schedule:
-    - cron: "7,17,27,37,47,57 * * * *"   # a cada 10 min (minutos quebrados atrasam menos)
+    - cron: "7,17,27,37,47,57 * * * *"   # a cada 10 min: coloca no site o que já foi ao ar
   workflow_dispatch:
     inputs:
       teste:
-        description: "Só testar a chave (não publica)"
+        description: "Só testar a chave da Zernio (não publica nada)"
         type: boolean
         default: false
 
@@ -28,8 +31,7 @@ jobs:
             agenda
             data
             scripts
-            midia
-      - name: Ver se há algo para publicar
+      - name: Ver se há algo a fazer
         id: fila
         run: |
           python3 - <<'PY' >> "$GITHUB_OUTPUT"
@@ -38,21 +40,21 @@ jobs:
           n=0
           for p in glob.glob('agenda/*.json'):
               i=json.load(open(p))
-              if i.get('status') in ('agendado','publicando') and datetime.fromisoformat(i['publicar_em'])<=datetime.now(timezone.utc): n+=1
+              s=i.get('status')
+              if s=='agendado' or (s=='programado' and datetime.fromisoformat(i['publicar_em'])<=datetime.now(timezone.utc)): n+=1
           print(f"pendentes={n}")
           PY
       - name: Publicar
         if: steps.fila.outputs.pendentes != '0' || github.event_name == 'workflow_dispatch'
         env:
-          META_TOKEN: ${{ secrets.META_TOKEN }}
-          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          ZERNIO_API_KEY: ${{ secrets.ZERNIO_API_KEY }}
           GH_TOKEN: ${{ github.token }}
         run: |
           if [ "${{ inputs.teste }}" = "true" ]; then python3 scripts/publicar.py --teste; else python3 scripts/publicar.py; fi
       - name: Gravar resultado
-        if: always() && (steps.fila.outputs.pendentes != '0')
+        if: always() && steps.fila.outputs.pendentes != '0'
         run: |
           git config user.name "robo-hyago"
           git config user.email "robo-hyago@users.noreply.github.com"
           git add agenda data
-          git diff --cached --quiet || (git commit -m "Robô: agenda publicada" && git push)
+          git diff --cached --quiet || (git commit -m "Robô: agenda atualizada" && git pull --rebase && git push)
