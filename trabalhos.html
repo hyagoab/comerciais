@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Trabalhos — Hyago Brito</title>
+<meta name="description" content="Portfólio de comerciais de Hyago Brito.">
+<meta name="theme-color" content="#070d14">
+<link rel="icon" href="/assets/hyago.jpg">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<main class="wide">
+  <div class="top"><a class="signature" href="/">HYAGO <b>/</b></a><a class="back" href="/">← Voltar</a></div>
+  <h2>Meus trabalhos<b>.</b></h2>
+  <div class="grid" id="grid"></div>
+</main>
+<div class="viewer" id="viewer" role="dialog" aria-label="Vídeo">
+  <video id="player" controls playsinline></video>
+  <button id="fechar" aria-label="Fechar">×</button>
+</div>
+<script>
+const grid=document.getElementById('grid'),viewer=document.getElementById('viewer'),player=document.getElementById('player');
+function abrir(t){player.src=t.video;player.poster=t.capa||'';viewer.classList.add('on');
+  const fs=viewer.requestFullscreen||viewer.webkitRequestFullscreen;try{fs&&fs.call(viewer).catch(()=>{});}catch(e){}
+  player.play().catch(()=>{});}
+function fechar(){player.pause();player.removeAttribute('src');player.load();viewer.classList.remove('on');
+  if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});}
+document.getElementById('fechar').onclick=fechar;
+document.addEventListener('keydown',e=>{if(e.key==='Escape')fechar();});
+document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&viewer.classList.contains('on'))fechar();});
+fetch('/data/trabalhos.json',{cache:'no-store'}).then(r=>r.json()).then(lista=>{
+  lista.sort((a,b)=>(b.data||'').localeCompare(a.data||''));
+  if(!lista.length){grid.outerHTML='<p class="empty">Nenhum vídeo publicado ainda.</p>';return;}
+  for(const t of lista){const b=document.createElement('button');b.className='card';b.type='button';
+    b.innerHTML='<div class="thumb"><img loading="lazy" alt=""><div class="play"><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l12-7.5z"/></svg></span></div></div><h3></h3>';
+    b.querySelector('img').src=t.capa||'';b.querySelector('h3').textContent=t.titulo;b.onclick=()=>abrir(t);grid.appendChild(b);}
+}).catch(()=>{grid.outerHTML='<p class="empty">Não foi possível carregar os trabalhos.</p>';});
+</script>
+</body>
+</html>
