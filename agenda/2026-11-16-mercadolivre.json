@@ -1,14 +1,18 @@
 {
   "id": "mercadolivre",
   "publicar_em": "2026-11-16T19:00:00-03:00",
-  "status": "agendado",
+  "status": "programado",
   "reels": {
     "arquivo": "release:reels_mercadolivre.mp4",
     "legenda": "COMERCIAL DO MERCADO LIVRE 📦\nPediram no precinho e chegou rapidinho… olha só 👀\n\nQual marca eu faço depois? Comenta aqui 👇\nMarca a @mercadolivre pra esse comercial chegar até ela!\n\n#mercadolivre #comercial #motiondesign #publicidade #propaganda",
-    "capa_url": "https://raw.githubusercontent.com/hyagoab/comerciais/main/midia/capa_mercadolivre.jpg"
+    "capa_url": "https://raw.githubusercontent.com/hyagoab/comerciais/main/midia/capa_mercadolivre.jpg",
+    "video_url": "https://media.zernio.com/temp/1794820872145_7c8b5de9e08dd891_reels_mercadolivre.mp4",
+    "post_id": "6afacb0a86721ea26dab4bc7"
   },
   "story": {
-    "arquivo": "release:story_mercadolivre.mp4"
+    "arquivo": "release:story_mercadolivre.mp4",
+    "video_url": "https://media.zernio.com/temp/1794820880928_f32819b6f99942f0_story_mercadolivre.mp4",
+    "post_id": "6afacb12b0b77bf952dfc408"
   },
   "site": {
     "id": "mercadolivre",
