@@ -1,0 +1,19 @@
+{
+  "id": "mercadolivre",
+  "publicar_em": "2026-11-16T19:00:00-03:00",
+  "status": "agendado",
+  "reels": {
+    "arquivo": "release:reels_mercadolivre.mp4",
+    "legenda": "COMERCIAL DO MERCADO LIVRE 📦\nPediram no precinho e chegou rapidinho… olha só 👀\n\nQual marca eu faço depois? Comenta aqui 👇\nMarca a @mercadolivre pra esse comercial chegar até ela!\n\n#mercadolivre #comercial #motiondesign #publicidade #propaganda",
+    "capa_url": "https://raw.githubusercontent.com/hyagoab/comerciais/main/midia/capa_mercadolivre.jpg"
+  },
+  "story": {
+    "arquivo": "release:story_mercadolivre.mp4"
+  },
+  "site": {
+    "id": "mercadolivre",
+    "titulo": "Mercado Livre",
+    "video": "/videos/mercadolivre.mp4",
+    "capa": "/videos/mercadolivre.jpg"
+  }
+}
