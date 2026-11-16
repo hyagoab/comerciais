@@ -1,0 +1,16 @@
+{
+  "id": "uber",
+  "publicar_em": "2026-11-20T19:00:00-03:00",
+  "status": "programado",
+  "obs": "Reels agendado direto no Zernio (narrado, voz Google Nika). Story será refeito com a figurinha nova.",
+  "reels": {
+    "arquivo": "Uber - vídeo final (reel).mp4",
+    "post_id": "6afb8e8e2d28b144786636cd"
+  },
+  "site": {
+    "id": "uber",
+    "titulo": "Uber",
+    "video": "/videos/uber.mp4",
+    "capa": "/videos/uber.jpg"
+  }
+}
