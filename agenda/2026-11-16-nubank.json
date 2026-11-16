@@ -1,20 +1,24 @@
 {
   "id": "nubank",
   "publicar_em": "2026-11-16T19:00:00-03:00",
-  "status": "programado",
+  "status": "publicado",
   "obs": "Reels e Story criados direto no painel da Zernio (16/11). O robô só confere e coloca no site depois das 19h.",
   "reels": {
     "arquivo": "Nubank - vídeo final (reel).mp4 (narrado v7, voz Google)",
-    "post_id": "6afb32f4ce844562ee3644ae"
+    "post_id": "6afb32f4ce844562ee3644ae",
+    "status_zernio": "published"
   },
   "story": {
     "arquivo": "Nubank - story.mp4",
-    "post_id": "6afb3370dad314406ea5073c"
+    "post_id": "6afb3370dad314406ea5073c",
+    "status_zernio": "published"
   },
   "site": {
     "id": "nubank",
     "titulo": "Nubank",
     "video": "/videos/nubank.mp4",
-    "capa": "/videos/nubank.jpg"
-  }
+    "capa": "/videos/nubank.jpg",
+    "publicado": true
+  },
+  "publicado_em": "2026-11-16T23:17:33+00:00"
 }
