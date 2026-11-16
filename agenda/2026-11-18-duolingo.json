@@ -1,0 +1,20 @@
+{
+  "id": "duolingo",
+  "publicar_em": "2026-11-18T19:00:00-03:00",
+  "status": "programado",
+  "obs": "Reels e Story agendados direto no Zernio (versão narrada, voz Google Nika).",
+  "reels": {
+    "arquivo": "Duolingo - vídeo final (reel).mp4",
+    "post_id": "6afb5a92ff9dc38b7aebd918"
+  },
+  "story": {
+    "arquivo": "Duolingo - story.mp4",
+    "post_id": "6afb5b161ec6be2ba1c0cb96"
+  },
+  "site": {
+    "id": "duolingo",
+    "titulo": "Duolingo",
+    "video": "/videos/duolingo.mp4",
+    "capa": "/videos/duolingo.jpg"
+  }
+}
