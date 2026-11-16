@@ -1,0 +1,9 @@
+{
+  "id": "mercadolivre",
+  "publicar_em": "2026-11-17T19:00:00-03:00",
+  "status": "programado",
+  "obs": "Reels e Story agendados direto no Zernio (versão narrada, voz Google Nika). Substitui 2026-11-16-mercadolivre.json (pausado).",
+  "reels": {"arquivo": "Mercado Livre - vídeo final (reel).mp4", "post_id": "6afb58f01ba89a06faba908f"},
+  "story": {"arquivo": "Mercado Livre - story.mp4", "post_id": "6afb595863af1daba0551f91"},
+  "site": {"id": "mercadolivre", "titulo": "Mercado Livre", "video": "/videos/mercadolivre.mp4", "capa": "/videos/mercadolivre.jpg"}
+}
