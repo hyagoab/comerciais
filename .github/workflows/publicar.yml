@@ -1,0 +1,58 @@
+name: Publicar agenda
+
+on:
+  schedule:
+    - cron: "7,17,27,37,47,57 * * * *"   # a cada 10 min (minutos quebrados atrasam menos)
+  workflow_dispatch:
+    inputs:
+      teste:
+        description: "Só testar a chave (não publica)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publicar
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            agenda
+            data
+            scripts
+            midia
+      - name: Ver se há algo para publicar
+        id: fila
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json,glob
+          from datetime import datetime,timezone
+          n=0
+          for p in glob.glob('agenda/*.json'):
+              i=json.load(open(p))
+              if i.get('status') in ('agendado','publicando') and datetime.fromisoformat(i['publicar_em'])<=datetime.now(timezone.utc): n+=1
+          print(f"pendentes={n}")
+          PY
+      - name: Publicar
+        if: steps.fila.outputs.pendentes != '0' || github.event_name == 'workflow_dispatch'
+        env:
+          META_TOKEN: ${{ secrets.META_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "${{ inputs.teste }}" = "true" ]; then python3 scripts/publicar.py --teste; else python3 scripts/publicar.py; fi
+      - name: Gravar resultado
+        if: always() && (steps.fila.outputs.pendentes != '0')
+        run: |
+          git config user.name "robo-hyago"
+          git config user.email "robo-hyago@users.noreply.github.com"
+          git add agenda data
+          git diff --cached --quiet || (git commit -m "Robô: agenda publicada" && git push)
