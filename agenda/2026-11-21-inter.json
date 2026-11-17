@@ -1,0 +1,20 @@
+{
+  "id": "inter",
+  "publicar_em": "2026-11-21T19:00:00-03:00",
+  "status": "programado",
+  "obs": "Reels e Story agendados direto no Zernio (narrado, voz Google Nika; story com a figurinha REELS NOVO nova).",
+  "reels": {
+    "arquivo": "Inter - vídeo final (reel).mp4",
+    "post_id": "6afc28edb9f2deeb036f9d7b"
+  },
+  "site": {
+    "id": "inter",
+    "titulo": "Inter",
+    "video": "/videos/inter.mp4",
+    "capa": "/videos/inter.jpg"
+  },
+  "story": {
+    "arquivo": "Inter - story.mp4",
+    "post_id": "6afc296f104eea3e89b9b4f5"
+  }
+}
