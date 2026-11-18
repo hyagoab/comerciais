@@ -1,5 +1,12 @@
 [
   {
+    "id": "mercadolivre",
+    "titulo": "Mercado Livre",
+    "video": "/videos/mercadolivre.mp4",
+    "capa": "/videos/mercadolivre.jpg",
+    "data": "2026-11-17"
+  },
+  {
     "id": "nubank",
     "titulo": "Nubank",
     "video": "/videos/nubank.mp4",
