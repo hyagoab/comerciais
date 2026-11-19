@@ -1,20 +1,24 @@
 {
   "id": "ifood",
   "publicar_em": "2026-11-19T19:00:00-03:00",
-  "status": "programado",
+  "status": "publicado",
   "obs": "Reels e Story agendados direto no Zernio (versão narrada, voz Google Nika).",
   "reels": {
     "arquivo": "iFood - vídeo final (reel).mp4",
-    "post_id": "6afb5b8c78a7860a49e061fc"
+    "post_id": "6afb5b8c78a7860a49e061fc",
+    "status_zernio": "published"
   },
   "story": {
     "arquivo": "iFood - story.mp4",
-    "post_id": "6afb5c02e314293ef26cbbd0"
+    "post_id": "6afb5c02e314293ef26cbbd0",
+    "status_zernio": "published"
   },
   "site": {
     "id": "ifood",
     "titulo": "iFood",
     "video": "/videos/ifood.mp4",
-    "capa": "/videos/ifood.jpg"
-  }
+    "capa": "/videos/ifood.jpg",
+    "publicado": true
+  },
+  "publicado_em": "2026-11-19T23:54:54+00:00"
 }

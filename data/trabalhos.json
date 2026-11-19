@@ -1,5 +1,12 @@
 [
   {
+    "id": "ifood",
+    "titulo": "iFood",
+    "video": "/videos/ifood.mp4",
+    "capa": "/videos/ifood.jpg",
+    "data": "2026-11-19"
+  },
+  {
     "id": "duolingo",
     "titulo": "Duolingo",
     "video": "/videos/duolingo.mp4",
