@@ -1,5 +1,12 @@
 [
   {
+    "id": "duolingo",
+    "titulo": "Duolingo",
+    "video": "/videos/duolingo.mp4",
+    "capa": "/videos/duolingo.jpg",
+    "data": "2026-11-18"
+  },
+  {
     "id": "mercadolivre",
     "titulo": "Mercado Livre",
     "video": "/videos/mercadolivre.mp4",
