@@ -1,5 +1,12 @@
 [
   {
+    "id": "uber",
+    "titulo": "Uber",
+    "video": "/videos/uber.mp4",
+    "capa": "/videos/uber.jpg",
+    "data": "2026-11-20"
+  },
+  {
     "id": "ifood",
     "titulo": "iFood",
     "video": "/videos/ifood.mp4",

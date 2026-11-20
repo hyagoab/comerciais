@@ -1,20 +1,24 @@
 {
   "id": "uber",
   "publicar_em": "2026-11-20T19:00:00-03:00",
-  "status": "programado",
+  "status": "publicado",
   "obs": "Reels e Story agendados direto no Zernio (narrado, voz Google Nika; story com a figurinha REELS NOVO nova).",
   "reels": {
     "arquivo": "Uber - vídeo final (reel).mp4",
-    "post_id": "6afb8e8e2d28b144786636cd"
+    "post_id": "6afb8e8e2d28b144786636cd",
+    "status_zernio": "published"
   },
   "site": {
     "id": "uber",
     "titulo": "Uber",
     "video": "/videos/uber.mp4",
-    "capa": "/videos/uber.jpg"
+    "capa": "/videos/uber.jpg",
+    "publicado": true
   },
   "story": {
     "arquivo": "Uber - story.mp4",
-    "post_id": "6afb975acb234a9dc4bd5123"
-  }
+    "post_id": "6afb975acb234a9dc4bd5123",
+    "status_zernio": "published"
+  },
+  "publicado_em": "2026-11-20T22:23:42+00:00"
 }
