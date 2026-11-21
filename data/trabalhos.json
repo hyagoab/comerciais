@@ -1,5 +1,12 @@
 [
   {
+    "id": "inter",
+    "titulo": "Inter",
+    "video": "/videos/inter.mp4",
+    "capa": "/videos/inter.jpg",
+    "data": "2026-11-21"
+  },
+  {
     "id": "uber",
     "titulo": "Uber",
     "video": "/videos/uber.mp4",
