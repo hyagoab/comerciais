@@ -1,0 +1,20 @@
+{
+  "id": "shopee",
+  "publicar_em": "2026-11-22T19:00:00-03:00",
+  "status": "programado",
+  "obs": "Reels e Story agendados direto no Zernio (Hyago no papel principal, cenas do Flow; story com a figurinha REELS NOVO nova).",
+  "reels": {
+    "arquivo": "Shopee - vídeo final (reel).mp4",
+    "post_id": "6b0320d628fdfa71aba4f0c8"
+  },
+  "site": {
+    "id": "shopee",
+    "titulo": "Shopee",
+    "video": "/videos/shopee.mp4",
+    "capa": "/videos/shopee.jpg"
+  },
+  "story": {
+    "arquivo": "Shopee - story.mp4",
+    "post_id": "6b03214fb016f5735d39a19b"
+  }
+}
