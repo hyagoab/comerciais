@@ -1,0 +1,23 @@
+{
+  "id": "gta6",
+  "publicar_em": "2026-11-23T12:00:00-03:00",
+  "status": "programado",
+  "obs": "Reels e Story agendados direto no Zernio (trailer com cenas oficiais do GTA 6 e retrospectiva; story com a figurinha REELS NOVO).",
+  "reels": {
+    "arquivo": "GTA 6 - vídeo final (reel).mp4",
+    "post_id": "6b03909e21f2946779ff038e",
+    "status_zernio": "scheduled"
+  },
+  "site": {
+    "id": "gta6",
+    "titulo": "GTA 6",
+    "video": "/videos/gta6.mp4",
+    "capa": "/videos/gta6.jpg",
+    "publicado": false
+  },
+  "story": {
+    "arquivo": "GTA 6 - story.mp4",
+    "post_id": "6b0390ef838e06d27ff5c25a",
+    "status_zernio": "scheduled"
+  }
+}
