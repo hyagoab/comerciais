@@ -1,5 +1,12 @@
 [
   {
+    "id": "gta6",
+    "titulo": "GTA 6",
+    "video": "/videos/gta6.mp4",
+    "capa": "/videos/gta6.jpg",
+    "data": "2026-11-23"
+  },
+  {
     "id": "shopee",
     "titulo": "Shopee",
     "video": "/videos/shopee.mp4",
