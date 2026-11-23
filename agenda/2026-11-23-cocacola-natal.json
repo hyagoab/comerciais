@@ -1,0 +1,23 @@
+{
+  "id": "cocacola-natal",
+  "publicar_em": "2026-11-23T19:00:00-03:00",
+  "status": "programado",
+  "obs": "Reels e Story agendados direto no Zernio (comercial de Natal narrado, com Caravana de Natal e vinheta da marca; story com a figurinha REELS NOVO).",
+  "reels": {
+    "arquivo": "Coca-Cola Natal - vídeo final (reel).mp4",
+    "post_id": "6b039aa55258e0fe60345afb",
+    "status_zernio": "scheduled"
+  },
+  "site": {
+    "id": "cocacola-natal",
+    "titulo": "Coca-Cola",
+    "video": "/videos/cocacola-natal.mp4",
+    "capa": "/videos/cocacola-natal.jpg",
+    "publicado": false
+  },
+  "story": {
+    "arquivo": "Coca-Cola Natal - story.mp4",
+    "post_id": "6b039ae0be1067997074a963",
+    "status_zernio": "scheduled"
+  }
+}
