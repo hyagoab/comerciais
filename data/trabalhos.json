@@ -1,5 +1,19 @@
 [
   {
+    "id": "havaianas",
+    "titulo": "Havaianas",
+    "video": "/videos/havaianas-v3.mp4",
+    "capa": "/capas/havaianas.jpg",
+    "data": "2026-11-27"
+  },
+  {
+    "id": "cocacola-natal",
+    "titulo": "Coca-Cola",
+    "video": "/videos/cocacola-natal-v7.mp4",
+    "capa": "/capas/cocacola-natal.jpg",
+    "data": "2026-11-26"
+  },
+  {
     "id": "gta6",
     "titulo": "GTA 6",
     "video": "/videos/gta6.mp4",
