@@ -25,6 +25,10 @@ API = "https://zernio.com/api/v1"
 CHAVE = os.environ.get("ZERNIO_API_KEY", "").strip()
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FUSO = "America/Sao_Paulo"
+# Capa padrão do Reels e do TikTok: o quadro em que o cartão de comentário da marca está
+# no topo e o Hyago está sorrindo, apontando (5 s no modelo de abertura dos reels).
+# Dá para trocar por post com "capa_ms" no arquivo da agenda.
+CAPA_MS = 5000
 
 
 def chamar(metodo, caminho, corpo=None):
@@ -106,13 +110,16 @@ def enviar_midia(caminho):
     return p["publicUrl"]
 
 
-def programar(conta, quando, video_url, legenda=None, story=False, capa=None):
+def programar(conta, quando, video_url, legenda=None, story=False, capa=None, capa_ms=CAPA_MS):
     plataforma = {"platform": "instagram", "accountId": conta.get("_id") or conta.get("id")}
     if story:
         plataforma["platformSpecificData"] = {"contentType": "story"}
     item = {"type": "video", "url": video_url}
+    # Capa sempre no quadro padrão (regra do Hyago, 27/11); "capa" só vale se pedida de propósito.
     if capa:
         item["instagramThumbnail"] = capa
+    elif not story:
+        plataforma["platformSpecificData"] = {"thumbOffset": int(capa_ms)}
     corpo = {"content": legenda or "", "platforms": [plataforma], "mediaItems": [item],
              "scheduledFor": quando, "timezone": FUSO}
     pid = id_perfil(conta)
@@ -123,7 +130,7 @@ def programar(conta, quando, video_url, legenda=None, story=False, capa=None):
     return post.get("_id") or post.get("id")
 
 
-def programar_tiktok(conta, quando, video_url, legenda, capa=None):
+def programar_tiktok(conta, quando, video_url, legenda, capa_ms=CAPA_MS):
     """Post separado do Instagram, para um erro no TikTok não afetar o Reels."""
     info = chamar("GET", f"/accounts/{id_conta(conta)}/tiktok/creator-info")
     info = info.get("data", info) if isinstance(info, dict) else {}
@@ -133,10 +140,11 @@ def programar_tiktok(conta, quando, video_url, legenda, capa=None):
         raise RuntimeError(f"A conta do TikTok não permite post público (níveis: {niveis})")
     ajustes = {"privacy_level": "PUBLIC_TO_EVERYONE", "allow_comment": True, "allow_duet": True,
                "allow_stitch": True, "content_preview_confirmed": True, "express_consent_given": True}
-    if capa:
-        ajustes["video_cover_image_url"] = capa
+    # Capa = um quadro do próprio vídeo (uma imagem de fora faria a Zernio emendar um
+    # quadro parado no começo do vídeo).
     corpo = {"content": (legenda or "")[:2200],
-             "platforms": [{"platform": "tiktok", "accountId": id_conta(conta)}],
+             "platforms": [{"platform": "tiktok", "accountId": id_conta(conta),
+                            "platformSpecificData": {"videoCoverTimestampMs": int(capa_ms)}}],
              "mediaItems": [{"type": "video", "url": video_url}],
              "tiktokSettings": ajustes, "scheduledFor": quando, "timezone": FUSO}
     pid = id_perfil(conta)
@@ -225,7 +233,8 @@ def main():
                     url = r.get("video_url") or enviar_midia(baixar(r["arquivo"]))
                     r["video_url"] = url
                     salvar(caminho, item)
-                    r["post_id"] = programar(conta, horario, url, legenda=r["legenda"], capa=r.get("capa_url"))
+                    r["post_id"] = programar(conta, horario, url, legenda=r["legenda"],
+                                             capa_ms=item.get("capa_ms", CAPA_MS))
                     salvar(caminho, item)
                     print("  Reels programado:", r["post_id"])
                 tk = item.get("tiktok")
@@ -239,7 +248,7 @@ def main():
                             raise RuntimeError("Nenhuma conta do TikTok conectada na Zernio.")
                         tk["post_id"] = programar_tiktok(ct, horario, tk_video,
                                                          tk.get("legenda") or (r or {}).get("legenda"),
-                                                         capa=tk.get("capa_url") or (r or {}).get("capa_url"))
+                                                         capa_ms=item.get("capa_ms", CAPA_MS))
                         tk.pop("erro", None)
                         print("  TikTok programado:", tk["post_id"])
                     except Exception as e:
