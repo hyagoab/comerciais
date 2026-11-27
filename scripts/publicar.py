@@ -182,6 +182,24 @@ def main():
                 print("TikTok creator-info falhou:", e)
         else:
             print("Nenhuma conta do TikTok conectada.")
+        if True:  # --teste também lista os posts recentes (só leitura)
+            for fonte in ("zernio", "external"):
+                for plat in ("instagram", "tiktok"):
+                    try:
+                        q = f"/posts?platform={plat}&limit=12&source={fonte}&view=full&sortBy=createdAt"
+                        ps = lista(chamar("GET", q), "posts")
+                    except Exception as e:
+                        print(f"Posts {plat}/{fonte}: falhou: {e}")
+                        continue
+                    print(f"=== Posts {plat} ({fonte}): {len(ps)}")
+                    for x in ps:
+                        midia = [m.get("url") for m in (x.get("mediaItems") or [])]
+                        plats = [{k: pl.get(k) for k in ("platform", "status", "platformPostUrl", "publishedAt")
+                                  if pl.get(k)} for pl in (x.get("platforms") or [])]
+                        print(json.dumps({"id": x.get("_id") or x.get("id"), "status": x.get("status"),
+                                          "scheduledFor": x.get("scheduledFor"), "publishedAt": x.get("publishedAt"),
+                                          "createdAt": x.get("createdAt"), "plataformas": plats, "midia": midia,
+                                          "legenda": x.get("content")}, ensure_ascii=False))
         return
     agora = datetime.now(timezone.utc)
     for caminho in sorted(glob.glob(os.path.join(RAIZ, "agenda", "*.json"))):
