@@ -167,18 +167,6 @@ def main():
     if not CHAVE:
         sys.exit("ZERNIO_API_KEY não configurada nos segredos do repositório.")
     if "--teste" in sys.argv:
-        # TEMPORÁRIO (só na branch): quadros do começo dos reels para achar a capa do TikTok
-        import base64, tempfile
-        for nome, url in [("coca","https://media.zernio.com/media/1795514848938_45e374ba51af4a3d_cocacola_reel_v7.mp4"),
-                          ("havaianas","https://media.zernio.com/media/1795515117894_9049eaf53e6aac76_havaianas_reel.mp4"),
-                          ("shopee","https://media.zernio.com/media/1795367121493_fbaf522a127c0f21_Shopee_-_reel.mp4")]:
-            d = tempfile.mkdtemp(); v = os.path.join(d, "v.mp4")
-            urllib.request.urlretrieve(url, v)
-            print("PROBE", nome, subprocess.run(["ffprobe","-v","error","-show_entries","stream=width,height,r_frame_rate:format=duration","-of","csv=p=0",v],capture_output=True,text=True).stdout.replace("\n"," | "))
-            sub = subprocess.run(["ffmpeg","-v","error","-i",v,"-t","8","-vf","fps=4,scale=72:-1,tile=8x4","-frames:v","1","-q:v","4",os.path.join(d,"s.jpg")],capture_output=True,text=True)
-            print("FF", sub.stderr[:300])
-            print("IMG", nome, base64.b64encode(open(os.path.join(d,"s.jpg"),"rb").read()).decode())
-        return
         campos = ("_id", "id", "platform", "username", "displayName", "name", "profileId", "accountType",
                   "isActive", "connectionType")
         todas = lista(chamar("GET", "/accounts"), "accounts")
