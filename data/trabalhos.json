@@ -3,63 +3,63 @@
     "id": "gta6",
     "titulo": "GTA 6",
     "video": "/videos/gta6.mp4",
-    "capa": "/videos/gta6.jpg",
+    "capa": "/capas/gta6.jpg",
     "data": "2026-11-23"
   },
   {
     "id": "shopee",
     "titulo": "Shopee",
     "video": "/videos/shopee.mp4",
-    "capa": "/videos/shopee.jpg",
+    "capa": "/capas/shopee.jpg",
     "data": "2026-11-22"
   },
   {
     "id": "inter",
     "titulo": "Inter",
     "video": "/videos/inter.mp4",
-    "capa": "/videos/inter.jpg",
+    "capa": "/capas/inter.jpg",
     "data": "2026-11-21"
   },
   {
     "id": "uber",
     "titulo": "Uber",
     "video": "/videos/uber.mp4",
-    "capa": "/videos/uber.jpg",
+    "capa": "/capas/uber.jpg",
     "data": "2026-11-20"
   },
   {
     "id": "ifood",
     "titulo": "iFood",
     "video": "/videos/ifood.mp4",
-    "capa": "/videos/ifood.jpg",
+    "capa": "/capas/ifood.jpg",
     "data": "2026-11-19"
   },
   {
     "id": "duolingo",
     "titulo": "Duolingo",
     "video": "/videos/duolingo.mp4",
-    "capa": "/videos/duolingo.jpg",
+    "capa": "/capas/duolingo.jpg",
     "data": "2026-11-18"
   },
   {
     "id": "mercadolivre",
     "titulo": "Mercado Livre",
     "video": "/videos/mercadolivre.mp4",
-    "capa": "/videos/mercadolivre.jpg",
+    "capa": "/capas/mercadolivre.jpg",
     "data": "2026-11-17"
   },
   {
     "id": "nubank",
     "titulo": "Nubank",
     "video": "/videos/nubank.mp4",
-    "capa": "/videos/nubank.jpg",
+    "capa": "/capas/nubank.jpg",
     "data": "2026-11-16"
   },
   {
     "id": "netflix",
     "titulo": "Netflix",
     "video": "/videos/netflix.mp4",
-    "capa": "/videos/netflix.jpg",
+    "capa": "/capas/netflix.jpg",
     "data": "2026-11-15"
   }
 ]
