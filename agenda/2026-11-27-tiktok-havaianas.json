@@ -1,8 +1,8 @@
 {
   "id": "tiktok-havaianas",
-  "publicar_em": null,
-  "status": "aguardando_aprovacao",
-  "obs": "Só TikTok: mesmo vídeo (v3) e mesma legenda do Reels postado no Instagram em 25/11. Para publicar: status \"agendado\" e publicar_em preenchido.",
+  "publicar_em": "2026-11-27T10:51:00-03:00",
+  "status": "agendado",
+  "obs": "Só TikTok: mesmo vídeo (v3) e mesma legenda do Reels postado no Instagram em 25/11. Aprovado por Hyago em 27/11 ('Sobe as duas').",
   "tiktok": {
     "video_url": "https://media.zernio.com/media/1795515117894_9049eaf53e6aac76_havaianas_reel.mp4",
     "legenda": "COMERCIAL DA HAVAIANAS 🩴 Tem gente que não tira nem pra dormir 😴\n\nQual marca eu faço depois? Comenta aqui 👇\nMarca a @havaianas pra esse comercial chegar até ela!\n\n#havaianas #comercial #claude #motion #opus"
