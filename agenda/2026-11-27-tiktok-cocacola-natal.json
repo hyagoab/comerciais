@@ -1,11 +1,13 @@
 {
   "id": "tiktok-cocacola-natal",
   "publicar_em": "2026-11-27T10:51:00-03:00",
-  "status": "programado",
+  "status": "publicado",
   "obs": "Só TikTok: mesmo vídeo (v7) e mesma legenda do Reels postado no Instagram em 24/11. Aprovado por Hyago em 27/11 ('Sobe as duas').",
   "tiktok": {
     "video_url": "https://media.zernio.com/media/1795514848938_45e374ba51af4a3d_cocacola_reel_v7.mp4",
     "legenda": "COMERCIAL DA COCA-COLA 🎅 Todo ano ela espera um mundo melhor… e esse Natal ele parou na porta dela 🎄\n\nQual marca eu faço depois? Comenta aqui 👇\nMarca a @cocacola_br pra esse comercial chegar até ela!\n\n#cocacola #comercial #claude #motion #opus",
-    "post_id": "6b098ad348f61dfc50f3eef1"
-  }
+    "post_id": "6b098ad348f61dfc50f3eef1",
+    "status_zernio": "published"
+  },
+  "publicado_em": "2026-11-27T20:17:02+00:00"
 }
