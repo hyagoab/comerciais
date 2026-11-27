@@ -7,6 +7,8 @@ Fluxo de cada arquivo em agenda/*.json:
                          programado no TikTok, com a mesma legenda (o Story fica só no
                          Instagram). Se o TikTok falhar, o erro fica em "tiktok" e o
                          Instagram segue normal. Para não mandar ao TikTok: "tiktok": false.
+                         Post só no TikTok: sem "reels"/"story" e com
+                         "tiktok": {"video_url": ..., "legenda": ...}.
                          Fica "programado".
   status "programado" -> quando o horário passa, adiciona o comercial 16:9 em
                          data/trabalhos.json (o site na Vercel atualiza sozinho) e
@@ -227,14 +229,17 @@ def main():
                     salvar(caminho, item)
                     print("  Reels programado:", r["post_id"])
                 tk = item.get("tiktok")
-                if r and r.get("video_url") and tk is not False and not (tk or {}).get("post_id"):
+                # Vídeo do TikTok: o do próprio bloco "tiktok" (post só no TikTok) ou o do Reels.
+                tk_video = (tk or {}).get("video_url") or (r or {}).get("video_url")
+                if tk_video and tk is not False and not (tk or {}).get("post_id"):
                     tk = item["tiktok"] = tk if isinstance(tk, dict) else {}
                     try:
                         ct = conta_tiktok()
                         if not ct:
                             raise RuntimeError("Nenhuma conta do TikTok conectada na Zernio.")
-                        tk["post_id"] = programar_tiktok(ct, horario, r["video_url"], r.get("legenda"),
-                                                         capa=r.get("capa_url"))
+                        tk["post_id"] = programar_tiktok(ct, horario, tk_video,
+                                                         tk.get("legenda") or (r or {}).get("legenda"),
+                                                         capa=tk.get("capa_url") or (r or {}).get("capa_url"))
                         tk.pop("erro", None)
                         print("  TikTok programado:", tk["post_id"])
                     except Exception as e:

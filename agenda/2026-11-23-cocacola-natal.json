@@ -1,23 +1,23 @@
 {
   "id": "cocacola-natal",
-  "publicar_em": null,
-  "status": "aguardando_aprovacao",
-  "obs": "Versão 1 reprovada em 23/11; reel e story voltaram para rascunho no Zernio. Nova versão em produção.",
+  "publicar_em": "2026-11-24T19:03:00-03:00",
+  "status": "publicado",
+  "obs": "Versão 1 reprovada em 23/11. A v7 foi postada no Instagram (Reels e Story) em 24/11. Vídeo v7 e capa já no site.",
   "reels": {
-    "arquivo": "Coca-Cola Natal - vídeo final (reel).mp4",
+    "arquivo": "cocacola_reel_v7.mp4",
     "post_id": "6b039aa55258e0fe60345afb",
-    "status_zernio": "draft"
+    "status_zernio": "published"
   },
   "site": {
     "id": "cocacola-natal",
     "titulo": "Coca-Cola",
-    "video": "/videos/cocacola-natal.mp4",
-    "capa": "/videos/cocacola-natal.jpg",
-    "publicado": false
+    "video": "/videos/cocacola-natal-v7.mp4",
+    "capa": "/capas/cocacola-natal.jpg",
+    "publicado": true
   },
   "story": {
     "arquivo": "Coca-Cola Natal - story.mp4",
     "post_id": "6b039ae0be1067997074a963",
-    "status_zernio": "draft"
+    "status_zernio": "published"
   }
 }
