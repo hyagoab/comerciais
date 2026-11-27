@@ -3,14 +3,18 @@
 
 Fluxo de cada arquivo em agenda/*.json:
   status "agendado"   -> envia os vídeos para a Zernio e programa o Reels e o Story
-                         para o horário exato (publicar_em). Fica "programado".
+                         para o horário exato (publicar_em). O vídeo do Reels também é
+                         programado no TikTok, com a mesma legenda (o Story fica só no
+                         Instagram). Se o TikTok falhar, o erro fica em "tiktok" e o
+                         Instagram segue normal. Para não mandar ao TikTok: "tiktok": false.
+                         Fica "programado".
   status "programado" -> quando o horário passa, adiciona o comercial 16:9 em
                          data/trabalhos.json (o site na Vercel atualiza sozinho) e
                          confere na Zernio se os posts saíram. Fica "publicado".
 Cada etapa concluída é gravada no próprio arquivo, então nada é enviado duas vezes.
 
 Segredo: ZERNIO_API_KEY.  Uso: python3 scripts/publicar.py [--teste]
-(--teste só confere a chave e lista as contas conectadas; não publica nada)
+(--teste só confere a chave e lista as contas conectadas, inclusive o TikTok; não publica nada)
 """
 import json, os, sys, glob, subprocess, urllib.request, urllib.error
 from datetime import datetime, timezone
@@ -43,9 +47,32 @@ def lista(resp, *chaves):
     return []
 
 
+def contas(plataforma):
+    todas = lista(chamar("GET", "/accounts"), "accounts")
+    return [c for c in todas if str(c.get("platform", "")).lower() == plataforma]
+
+
+def conta_tiktok():
+    tt = contas("tiktok")
+    for c in tt:
+        if "hyagocomerciais" in json.dumps(c).lower():
+            return c
+    return tt[0] if tt else None
+
+
+def id_conta(conta):
+    return conta.get("_id") or conta.get("id")
+
+
+def id_perfil(conta):
+    pid = conta.get("profileId")
+    if isinstance(pid, dict):
+        pid = pid.get("_id") or pid.get("id")
+    return pid
+
+
 def conta_instagram():
-    contas = lista(chamar("GET", "/accounts"), "accounts")
-    ig = [c for c in contas if str(c.get("platform", "")).lower() == "instagram"]
+    ig = contas("instagram")
     if not ig:
         raise RuntimeError("Nenhuma conta do Instagram conectada na Zernio.")
     for c in ig:
@@ -86,9 +113,31 @@ def programar(conta, quando, video_url, legenda=None, story=False, capa=None):
         item["instagramThumbnail"] = capa
     corpo = {"content": legenda or "", "platforms": [plataforma], "mediaItems": [item],
              "scheduledFor": quando, "timezone": FUSO}
-    pid = conta.get("profileId")
-    if isinstance(pid, dict):
-        pid = pid.get("_id") or pid.get("id")
+    pid = id_perfil(conta)
+    if pid:
+        corpo["profileId"] = pid
+    r = chamar("POST", "/posts", corpo)
+    post = r.get("post", r)
+    return post.get("_id") or post.get("id")
+
+
+def programar_tiktok(conta, quando, video_url, legenda, capa=None):
+    """Post separado do Instagram, para um erro no TikTok não afetar o Reels."""
+    info = chamar("GET", f"/accounts/{id_conta(conta)}/tiktok/creator-info")
+    info = info.get("data", info) if isinstance(info, dict) else {}
+    niveis = [n if isinstance(n, str) else (n.get("value") or n.get("level"))
+              for n in (info.get("privacyLevels") or [])]
+    if niveis and "PUBLIC_TO_EVERYONE" not in niveis:
+        raise RuntimeError(f"A conta do TikTok não permite post público (níveis: {niveis})")
+    ajustes = {"privacy_level": "PUBLIC_TO_EVERYONE", "allow_comment": True, "allow_duet": True,
+               "allow_stitch": True, "content_preview_confirmed": True, "express_consent_given": True}
+    if capa:
+        ajustes["video_cover_image_url"] = capa
+    corpo = {"content": (legenda or "")[:2200],
+             "platforms": [{"platform": "tiktok", "accountId": id_conta(conta)}],
+             "mediaItems": [{"type": "video", "url": video_url}],
+             "tiktokSettings": ajustes, "scheduledFor": quando, "timezone": FUSO}
+    pid = id_perfil(conta)
     if pid:
         corpo["profileId"] = pid
     r = chamar("POST", "/posts", corpo)
@@ -116,10 +165,23 @@ def main():
     if not CHAVE:
         sys.exit("ZERNIO_API_KEY não configurada nos segredos do repositório.")
     if "--teste" in sys.argv:
-        c = conta_instagram()
-        resumo = {k: c.get(k) for k in ("_id", "id", "platform", "username", "displayName", "name", "profileId",
-                                         "accountType", "isActive") if k in c}
-        print("Chave OK. Conta do Instagram na Zernio:", json.dumps(resumo, ensure_ascii=False))
+        campos = ("_id", "id", "platform", "username", "displayName", "name", "profileId", "accountType",
+                  "isActive", "connectionType")
+        todas = lista(chamar("GET", "/accounts"), "accounts")
+        print(f"Chave OK. {len(todas)} conta(s) conectada(s) na Zernio:")
+        for c in todas:
+            print(" -", json.dumps({k: c.get(k) for k in campos if k in c}, ensure_ascii=False))
+        tt = conta_tiktok()
+        if tt:
+            try:
+                info = chamar("GET", f"/accounts/{id_conta(tt)}/tiktok/creator-info")
+                info = info.get("data", info)
+                print("TikTok creator-info:", json.dumps({k: info.get(k) for k in
+                      ("creator", "privacyLevels", "postingLimits") if k in info}, ensure_ascii=False)[:1500])
+            except Exception as e:
+                print("TikTok creator-info falhou:", e)
+        else:
+            print("Nenhuma conta do TikTok conectada.")
         return
     agora = datetime.now(timezone.utc)
     for caminho in sorted(glob.glob(os.path.join(RAIZ, "agenda", "*.json"))):
@@ -146,6 +208,21 @@ def main():
                     r["post_id"] = programar(conta, horario, url, legenda=r["legenda"], capa=r.get("capa_url"))
                     salvar(caminho, item)
                     print("  Reels programado:", r["post_id"])
+                tk = item.get("tiktok")
+                if r and r.get("video_url") and tk is not False and not (tk or {}).get("post_id"):
+                    tk = item["tiktok"] = tk if isinstance(tk, dict) else {}
+                    try:
+                        ct = conta_tiktok()
+                        if not ct:
+                            raise RuntimeError("Nenhuma conta do TikTok conectada na Zernio.")
+                        tk["post_id"] = programar_tiktok(ct, horario, r["video_url"], r.get("legenda"),
+                                                         capa=r.get("capa_url"))
+                        tk.pop("erro", None)
+                        print("  TikTok programado:", tk["post_id"])
+                    except Exception as e:
+                        tk["erro"] = str(e)[:800]
+                        print("  TikTok com erro (Instagram segue normal):", e)
+                    salvar(caminho, item)
                 s = item.get("story")
                 if s and not s.get("post_id"):
                     url = s.get("video_url") or enviar_midia(baixar(s["arquivo"]))
@@ -157,8 +234,8 @@ def main():
                 item["status"] = "programado"
                 item.pop("erro", None)
             elif quando <= agora:
-                for k in ("reels", "story"):
-                    if item.get(k, {}).get("post_id"):
+                for k in ("reels", "story", "tiktok"):
+                    if isinstance(item.get(k), dict) and item[k].get("post_id"):
                         try:
                             p = chamar("GET", f"/posts/{item[k]['post_id']}")
                             item[k]["status_zernio"] = p.get("post", p).get("status")
