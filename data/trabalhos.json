@@ -1,5 +1,12 @@
 [
   {
+    "id": "magalu",
+    "titulo": "Magalu",
+    "video": "https://d2ol7oe51mr4n9.cloudfront.net/user_3F16MwtjkpWNaQUtwVwQMNNSblj/cadffd5f-6393-4f39-a78e-9a927ba9ac2e.mp4",
+    "capa": "https://d2ol7oe51mr4n9.cloudfront.net/user_3F16MwtjkpWNaQUtwVwQMNNSblj/04a0e7a5-40eb-49c1-93ff-e1658dda5735.jpg",
+    "data": "2026-11-27"
+  },
+  {
     "id": "havaianas",
     "titulo": "Havaianas",
     "video": "/videos/havaianas-v3.mp4",
